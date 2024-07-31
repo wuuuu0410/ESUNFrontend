@@ -44,6 +44,7 @@ export default {
             this.id = this.allEmployee[index].emp_id,
             this.name = this.allEmployee[index].name,
             this.mail = this.allEmployee[index].email
+            this.seat = this.allEmployee[index].floor_seat_seq
         },
         color(item, index) {
             if (this.selectedIndex === index) {
@@ -125,12 +126,13 @@ export default {
             <div class="detail">
                 <p>員工編號:{{ formatEmpId(this.id) }}</p>
                 <p>員工姓名:{{ this.name }}</p>
+                <p>{{ this.seat?'已有座位' : '無座位' }}</p>
             </div>
             <p>請選擇樓層:</p>
             <select name="" id="" v-model="this.floor" @change="this.findSeat(null, this.floor, null, true)">
                 <option :value=item v-for="(item, index) in this.allfloor">{{ item }}</option>
             </select>
-            <button class="confirm" @click="this.verify">確認選擇座位</button>
+            <button class="confirm" @click="this.verify">{{this.seat?'確認更換座位' : '確認選擇座位'}}</button>
         </div>
         <div class="seatingChart">
             <div class="seat" v-for="(item, index) in this.floorSeat" :key="index"
@@ -186,6 +188,26 @@ export default {
         border-radius: 20px;
         border: solid 1px #4ebdb3;
 
+        &::-webkit-scrollbar {
+            width: 10px;
+
+        }
+
+        &::-webkit-scrollbar-button {
+            background: transparent;
+            height: 10px;
+        }
+
+        &::-webkit-scrollbar-thumb {
+            background: #4ebdb3;
+            border-radius: 15px;
+
+        }
+
+        &::-webkit-scrollbar-track {
+            background: transparent;
+            border-radius: 15px;
+        }
         .seat {
             display: flex;
             width: 250px;
@@ -221,7 +243,7 @@ export default {
         margin: 0 5px;
     }
     .white {
-        background-color: white;
+        background-color: gainsboro;
         cursor: pointer;
     }
 

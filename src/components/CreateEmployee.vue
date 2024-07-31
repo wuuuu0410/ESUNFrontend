@@ -41,10 +41,6 @@ export default {
             this.createEmployee(null,this.name,this.mail,null,null,true)
             this.name=null
             this.mail=null
-            Swal.fire({
-                title: "新增成功",
-                icon: "success"
-            });
         }
     }
 };

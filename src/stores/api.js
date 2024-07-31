@@ -4,15 +4,15 @@ export default defineStore("api", {
     state: () => ({
         employeeList: [],
         allEmployee: [],
-        floorSeat:[],
-        allfloor:[],
-        seatContent:[]
+        floorSeat: [],
+        allfloor: [],
+        seatContent: []
     }),
     getters: {
 
     },
     actions: {
-        createEmployee(id, name, mail, seat, floor,judge=false) {
+        createEmployee(id, name, mail, seat, floor, judge = false) {
             let obj = {
                 "emp_id": id,
                 "name": name,
@@ -28,18 +28,40 @@ export default defineStore("api", {
             })
                 .then(res => res.json())
                 .then(data => {
-                    if(judge){
+                    if (judge) {
                         console.log('新增結果', data)
-                        this.searchEmployee(null, null,true)
-                        this.searchEmployee(null, null,false)
-                    }else{
-                        this.findSeat(null, floor, null,true)
-                        this.searchEmployee(null, null,true)
+                        if (data.statusCode == 400) {
+                            Swal.fire({
+                                title: "新增失敗",
+                                html: `<p>信箱已存在</p>`,
+                                icon: "error"
+                            });
+                        } else if (data.status == 400) {
+                            Swal.fire({
+                                title: "新增失敗",
+                                html: `<p>信箱格式不正確</p>`,
+                                icon: "error"
+                            });
+                        } else {
+                            Swal.fire({
+                                title: "新增成功",
+                                icon: "success"
+                            });
+                        }
+                        this.searchEmployee(null, null, true)
+                        this.searchEmployee(null, null, false)
+
+                    } else {
+                        this.findSeat(null, floor, null, true)
+                        this.searchEmployee(null, null, true)
                     }
-                    
+
+
                 })
+
+
         },
-        searchEmployee(id, name,judge=false) {
+        searchEmployee(id, name, judge = false) {
             let obj = {
                 "emp_id": id,
                 "name": name
@@ -53,19 +75,19 @@ export default defineStore("api", {
             })
                 .then(res => res.json())
                 .then(data => {
-                    if(judge){
+                    if (judge) {
                         console.log('員工列表', data)
                         this.employeeList = data.employeeList
                         console.log(this.employeeList)
-                    }else{
+                    } else {
                         console.log('所有員工', data)
                         this.allEmployee = data.employeeList
                         console.log(this.allEmployee)
                     }
-                    
+
                 })
         },
-        findSeat(id, floor, seat,judge) {
+        findSeat(id, floor, seat, judge) {
             let obj = {
                 "floor_seat_seq": id,
                 "floor_no": floor,
@@ -80,20 +102,20 @@ export default defineStore("api", {
             })
                 .then(res => res.json())
                 .then(data => {
-                    if(judge==1){
+                    if (judge == 1) {
                         console.log('樓層', data)
                         this.floorSeat = data.seatingChartList
                     }
-                    if(judge==2){
+                    if (judge == 2) {
                         const arr = data.seatingChartList
-                        for(let i=0 ; i<arr.length;i++){
-                            if(!this.allfloor.includes(arr[i].floor_no))
-                            this.allfloor.push(arr[i].floor_no)
+                        for (let i = 0; i < arr.length; i++) {
+                            if (!this.allfloor.includes(arr[i].floor_no))
+                                this.allfloor.push(arr[i].floor_no)
                         }
                     }
-                    if(judge==3){
+                    if (judge == 3) {
                         console.log(data.seatingChartList)
-                        this.seatContent=data.seatingChartList[0]
+                        this.seatContent = data.seatingChartList[0]
                         Swal.fire({
                             title: "座位資訊",
                             html: `<p><strong>座位編號：</strong>${this.seatContent.floor_seat_seq}</p>
@@ -101,15 +123,15 @@ export default defineStore("api", {
                                     <p><strong>座位號碼：</strong>${this.seatContent.seat_no}</p>
                                     `,
                             showCloseButton: true,
-                            showConfirmButton: false,  
+                            showConfirmButton: false,
                             customClass: {
-                                popup: 'swal2-custom-popup', 
+                                popup: 'swal2-custom-popup',
                             }
                         });
                     }
-                    
+
                 })
         },
-        
+
     }
 })
