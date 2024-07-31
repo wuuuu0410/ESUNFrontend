@@ -1,9 +1,12 @@
 <script>
-
+import api from '@/stores/api';
+import { mapState, mapActions } from 'pinia';
+import Swal from 'sweetalert2';
 export default {
     data() {
         return {
-
+            name:null,
+            mail:null
         };
     },
     created() {
@@ -13,14 +16,34 @@ export default {
 
     },
     computed: {
-
+        
     },
     components: {
 
     },
 
     methods: {
-
+        ...mapActions(api, ['createEmployee']),
+        verify(){
+            if(this.name == null || this.mail == null  ){
+                Swal.fire({
+                    title: "新增失敗",
+                    html: `<p>請輸入姓名和信箱</p>`,
+                    showCloseButton: true,
+                    showConfirmButton: false,  
+                    icon:"error",
+                    customClass: {
+                        popup: 'swal2-custom-popup', 
+                    }
+                });
+                return
+            }
+            this.createEmployee(this.name,this.mail)
+            Swal.fire({
+                title: "新增成功",
+                icon: "success"
+            });
+        }
     }
 };
 </script>
@@ -29,14 +52,14 @@ export default {
     <div class="createArea">
         <div class="create">
             <label for="" class="createLabel">員工姓名:</label>
-            <input class="createInput" type="text">
+            <input class="createInput" v-model="this.name" type="text">
         </div>
 
         <div class="create">
             <label for="" class="createLabel">員工信箱:</label>
-            <input class="createInput" type="email">
+            <input class="createInput" v-model="this.mail" type="email">
         </div>
-        <button>新增</button>
+        <button @click="this.verify">新增</button>
     </div>
 </template>
 
