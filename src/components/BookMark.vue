@@ -65,6 +65,8 @@ export default {
     height: 15dvh;
     width: 100%;
     display: flex;
+    background-image:url(../img/玉山背景.jpg);
+    background-size: 100%;
 
     .logo {
         width: 12%;
@@ -77,21 +79,20 @@ export default {
         height: 100%;
         padding: 0 10%;
         display: flex;
-        
         align-items: center;
     }
 
     .tablink {
-        height: 70%;
-        background-color: white;
+        height: 50%;
         border: none;
         cursor: pointer;
         padding: 10px 20px;
         margin: 0 5%;
         font-size: 24px;
         font-weight: 700;
-        border-radius: 20%;
+        border-radius: 20px;
         color: #4ebdb3;
+        background-color: transparent;
         display: flex;
         align-items: center;
         &.active {
@@ -104,7 +105,6 @@ export default {
     .tabcontent {
         width: 100%;
         display: none;
-
 
     }
 

@@ -116,7 +116,7 @@ export default {
                 icon: "success"
             }).then(() => {
                 this.selectEmployee(this.value);
-                console.log('seat',this.seat)
+                console.log('seat', this.seat)
             });
 
         }
@@ -145,9 +145,8 @@ export default {
         <div class="seatingChart">
             <div class="seat" v-for="(item, index) in this.floorSeat" :key="index"
                 :class="color(item.emp_id, item.floor_seat_seq)" @click="click(item.floor_seat_seq, index)">
-                <span>{{ item.floor_no }}樓:</span>
-                <span>座位{{ item.seat_no }}</span>
-                <span>{{ item.emp_id ? '[員編:' + this.formatEmpId(item.emp_id) + ']' : '空位' }}</span>
+                <p>{{ item.floor_no }}樓:座位{{ item.seat_no }}<br>{{ item.emp_id ? '[員編:' + this.formatEmpId(item.emp_id)
+                    + ']' : '空位' }}</p>
             </div>
         </div>
     </div>
@@ -162,12 +161,13 @@ export default {
     .select {
         display: flex;
         flex-direction: column;
-        margin: 50px 50px;
+        margin: 50px 20px 50px 30px;
         padding: 10px 50px;
-        width: 200px;
+        width: 250px;
         height: 400px;
         background-color: #4ebdb3;
         border-radius: 10px;
+        color: white;
 
         select {
             width: 180px;
@@ -187,7 +187,7 @@ export default {
     }
 
     .seatingChart {
-        margin: 50px 10px;
+        margin: 50px 30px 50px 0px;
         flex: 1;
         display: flex;
         flex-wrap: wrap;
@@ -226,7 +226,7 @@ export default {
             // border: solid 1px black;
             align-items: center;
             justify-content: center;
-
+            text-align: center;
         }
     }
 
@@ -239,18 +239,18 @@ export default {
         font-size: 20px;
         font-weight: 600;
         margin: 30px 0;
+        color: #4ebdb3;
+        background-color: white;
+
+        &:hover {
+            transform: scale(1.1);
+        }
     }
 
     p {
-        margin: 10px 0;
+        margin: 10px 5px;
         font-weight: 600;
         font-size: 20px;
-    }
-
-    span {
-        font-size: 18px;
-        font-weight: 600;
-        margin: 0 5px;
     }
 
     .white {

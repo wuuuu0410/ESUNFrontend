@@ -13,7 +13,7 @@ export default {
         };
     },
     created() {
-        this.searchEmployee(null, null,true)
+        this.searchEmployee(null, null, true)
     },
     mounted() {
 
@@ -44,7 +44,7 @@ export default {
     },
 
     methods: {
-        ...mapActions(api, ['searchEmployee','findSeat']),
+        ...mapActions(api, ['searchEmployee', 'findSeat']),
         //補足5碼
         formatEmpId(empId) {
             return empId.toString().padStart(5, '0');
@@ -61,13 +61,13 @@ export default {
             this.isActive = index;
         },
         //搜尋時回到第1頁
-        search(){
+        search() {
             this.searchEmployee(this.removeLeadingZeros(this.id), this.name, true)
             this.changePage(0)
         },
         //取得座位資訊
-        content(id){
-            this.findSeat(id, null, null,3) 
+        content(id) {
+            this.findSeat(id, null, null, 3)
         }
     }
 };
@@ -77,11 +77,11 @@ export default {
     <div class="body">
         <div class="searchEmployee">
             <div class="search">
-                <label class="searchLabel" for="">員編</label>
+                <label class="searchLabel" for="">員編:</label>
                 <input class="searchInput" v-model="this.id" type="text">
             </div>
             <div class="search">
-                <label class="searchLabel" for="">姓名</label>
+                <label class="searchLabel" for="">姓名:</label>
                 <input class="searchInput" v-model="this.name" type="text">
             </div>
             <button @click="this.search">搜尋</button>
@@ -100,7 +100,8 @@ export default {
                     <td>{{ item.name }}</td>
                     <td>{{ item.email }}</td>
                     <td>{{ item.floor_seat_seq }}</td>
-                    <td class="icon" v-if="item.floor_seat_seq" @click="content(item.floor_seat_seq )"><i class="fa-solid fa-circle-info"></i></td>
+                    <td class="icon" v-if="item.floor_seat_seq" @click="content(item.floor_seat_seq)"><i
+                            class="fa-solid fa-circle-info"></i></td>
                     <td v-else></td>
                 </tr>
             </tbody>
@@ -123,7 +124,7 @@ export default {
 .searchEmployee {
     display: flex;
     flex-direction: column;
-    margin: 50px auto;
+    margin: 50px 0 0 25px;
     padding: 0 50px;
     width: 200px;
     height: 300px;
@@ -136,13 +137,14 @@ export default {
         margin: 30px 0;
 
         .searchLabel {
-            width: 25%;
+            width: 26%;
             font-size: 20px;
             font-weight: 600;
+            color: white;
         }
 
         .searchInput {
-            width: 75%;
+            width: 74%;
             border-radius: 10px;
             padding-left: 13px;
             border: none;
@@ -162,12 +164,20 @@ button {
     font-size: 18px;
     font-weight: 600;
     margin: 30px 0 0 50px;
+    color: #4ebdb3;
+    background-color: white;
+
+    &:hover {
+        transform: scale(1.1);
+    }
 }
-.icon{
+
+.icon {
     cursor: pointer;
 }
+
 .employee {
-    margin: 50px auto;
+    margin: 50px 25px 0 20px;
     width: 80%;
     height: 50px;
     border-collapse: collapse;
@@ -178,6 +188,7 @@ button {
         background-color: #4ebdb3;
         font-size: 20px;
         color: white;
+        border: solid 1px #4ebdb3;
     }
 
     td {
@@ -210,7 +221,7 @@ button {
 }
 
 .buttons:hover {
-    transform: scale(1.2);
+    transform: scale(1.1);
 }
 
 .buttons:active {
