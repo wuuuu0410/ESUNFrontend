@@ -13,7 +13,7 @@ export default {
         };
     },
     created() {
-        this.searchEmployee(null, null)
+        this.searchEmployee(null, null,true)
     },
     mounted() {
 
@@ -22,9 +22,10 @@ export default {
         ...mapState(api, ['employeeList']),
         //分頁
         pages() {
+            console.log(this.employeeList)
             const pages = [];
-            if (this.employeeList == null) {
-                return pages;
+            if (!this.employeeList) {
+                return null;
             }
             for (let i = 0; i < this.employeeList.length; i += this.itemsPerPage) {
                 pages.push(this.employeeList.slice(i, i + this.itemsPerPage));
@@ -33,7 +34,7 @@ export default {
         },
         buttons() {
             if (this.employeeList == null) {
-                return
+                return null
             }
             return Array.from({ length: Math.ceil(this.employeeList.length / this.itemsPerPage) }, (_, index) => index + 1);
         },
@@ -43,7 +44,7 @@ export default {
     },
 
     methods: {
-        ...mapActions(api, ['searchEmployee']),
+        ...mapActions(api, ['searchEmployee','findSeat']),
         //補足5碼
         formatEmpId(empId) {
             return empId.toString().padStart(5, '0');
@@ -59,6 +60,13 @@ export default {
             window.scrollTo({ top: 10, behavior: 'smooth' });
             this.isActive = index;
         },
+        search(){
+            this.searchEmployee(this.removeLeadingZeros(this.id), this.name, true)
+            this.changePage(0)
+        },
+        content(id){
+            this.findSeat(id, null, null,3) 
+        }
     }
 };
 </script>
@@ -74,7 +82,7 @@ export default {
                 <label class="searchLabel" for="">姓名</label>
                 <input class="searchInput" v-model="this.name" type="text">
             </div>
-            <button @click="this.searchEmployee(removeLeadingZeros(this.id), this.name)">搜尋</button>
+            <button @click="this.search">搜尋</button>
         </div>
         <table class="employee">
             <tr>
@@ -82,6 +90,7 @@ export default {
                 <th>姓名</th>
                 <th>信箱</th>
                 <th>座位編號</th>
+                <th>座位資訊</th>
             </tr>
             <tbody v-for="(page, index) in pages" :key="index" v-show="currentPage === index">
                 <tr v-for="(item, itemIndex) in page" :key="itemIndex">
@@ -89,6 +98,8 @@ export default {
                     <td>{{ item.name }}</td>
                     <td>{{ item.email }}</td>
                     <td>{{ item.floor_seat_seq }}</td>
+                    <td v-if="item.floor_seat_seq" @click="content(item.floor_seat_seq )"><i class="fa-solid fa-circle-info"></i></td>
+                    <td v-else></td>
                 </tr>
             </tbody>
         </table>
