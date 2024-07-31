@@ -138,7 +138,7 @@ export default {
         .searchLabel {
             width: 25%;
             font-size: 20px;
-            font-weight: 500;
+            font-weight: 600;
         }
 
         .searchInput {
@@ -159,7 +159,8 @@ button {
     border-radius: 35px;
     border: none;
     cursor: pointer;
-    font-size: 16px;
+    font-size: 18px;
+    font-weight: 600;
     margin: 30px 0 0 50px;
 }
 .icon{
@@ -183,7 +184,7 @@ button {
         padding: 20px 0;
         margin: auto;
         text-align: center;
-        font-family: 500;
+        font-weight: 600;
         font-size: 20px;
         border: solid 1px #4ebdb3;
     }

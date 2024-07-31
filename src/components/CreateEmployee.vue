@@ -103,7 +103,8 @@ export default {
         border-radius: 35px;
         border: none;
         cursor: pointer;
-        font-size: 16px;
+        font-size: 18px;
+        font-weight: 600;
         margin:50px 0 0 200px;
     }
 }
