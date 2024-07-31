@@ -60,10 +60,12 @@ export default {
             window.scrollTo({ top: 10, behavior: 'smooth' });
             this.isActive = index;
         },
+        //搜尋時回到第1頁
         search(){
             this.searchEmployee(this.removeLeadingZeros(this.id), this.name, true)
             this.changePage(0)
         },
+        //取得座位資訊
         content(id){
             this.findSeat(id, null, null,3) 
         }
@@ -98,7 +100,7 @@ export default {
                     <td>{{ item.name }}</td>
                     <td>{{ item.email }}</td>
                     <td>{{ item.floor_seat_seq }}</td>
-                    <td v-if="item.floor_seat_seq" @click="content(item.floor_seat_seq )"><i class="fa-solid fa-circle-info"></i></td>
+                    <td class="icon" v-if="item.floor_seat_seq" @click="content(item.floor_seat_seq )"><i class="fa-solid fa-circle-info"></i></td>
                     <td v-else></td>
                 </tr>
             </tbody>
@@ -160,7 +162,9 @@ button {
     font-size: 16px;
     margin: 30px 0 0 50px;
 }
-
+.icon{
+    cursor: pointer;
+}
 .employee {
     margin: 50px auto;
     width: 80%;

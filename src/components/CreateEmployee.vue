@@ -24,6 +24,7 @@ export default {
 
     methods: {
         ...mapActions(api, ['createEmployee']),
+        //防呆
         verify(){
             if(this.name == null || this.mail == null  ){
                 Swal.fire({

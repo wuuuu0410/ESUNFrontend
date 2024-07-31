@@ -7,8 +7,8 @@ export default {
         return {
             id: null,
             name: null,
-            mail:null,
-            seat:null,
+            mail: null,
+            seat: null,
             value: null,
             floor: 1,
             selectedIndex: null,
@@ -18,7 +18,7 @@ export default {
     },
     created() {
         this.searchEmployee(null, null, false),
-        this.findSeat(null, 1, null, 1)
+            this.findSeat(null, 1, null, 1)
         this.findSeat(null, null, null, 2)
     },
     mounted() {
@@ -40,12 +40,14 @@ export default {
             }
             return empId.toString().padStart(5, '0');
         },
+        //取得選擇員工的資料
         selectEmployee(index) {
             this.id = this.allEmployee[index].emp_id,
-            this.name = this.allEmployee[index].name,
-            this.mail = this.allEmployee[index].email
+                this.name = this.allEmployee[index].name,
+                this.mail = this.allEmployee[index].email
             this.seat = this.allEmployee[index].floor_seat_seq
         },
+        //座位顏色變換
         color(item, index) {
             if (this.selectedIndex === index) {
                 return 'selected';
@@ -55,29 +57,31 @@ export default {
                 return 'red';
             }
         },
+        //點擊空位變為綠色 點擊有人座位可看座位員工資訊
         click(id, index) {
             const information = this.floorSeat[index];
             if (this.floorSeat[index].emp_id === null) {
                 this.selectedIndex = id;
                 this.selectSeat = id;
-            }else{
+            } else {
                 Swal.fire({
-                        title: "座位資訊",
-                        html: `<p><strong>員工編號：</strong>${this.formatEmpId(information.emp_id)}</p>
+                    title: "座位資訊",
+                    html: `<p><strong>員工編號：</strong>${this.formatEmpId(information.emp_id)}</p>
                                 <p><strong>員工姓名：</strong>${information.name}</p>
                                 <p><strong>員工信箱：</strong>${information.email}</p>
                                 <p><strong>座位編號：</strong>${information.floor_seat_seq}</p>
                                 <p><strong>座位樓層：</strong>${information.floor_no}</p>
                                 <p><strong>座位號碼：</strong>${information.seat_no}</p>
                                 `,
-                        showCloseButton: true,
-                        showConfirmButton: false,  
-                        customClass: {
-                            popup: 'swal2-custom-popup', 
-                        }
-                    });
+                    showCloseButton: true,
+                    showConfirmButton: false,
+                    customClass: {
+                        popup: 'swal2-custom-popup',
+                    }
+                });
             }
         },
+        //防呆
         verify() {
             if (this.id == null || this.name == null) {
                 Swal.fire({
@@ -105,12 +109,16 @@ export default {
                 });
                 return
             }
-            this.createEmployee(this.id, this.name, this.mail, this.selectSeat,this.floor, false)
+            this.createEmployee(this.id, this.name, this.mail, this.selectSeat, this.floor, false)
             this.selectedIndex = null
             Swal.fire({
                 title: "選擇成功",
                 icon: "success"
+            }).then(() => {
+                this.selectEmployee(this.value);
+                console.log('seat',this.seat)
             });
+
         }
     }
 };
@@ -126,13 +134,13 @@ export default {
             <div class="detail">
                 <p>員工編號:{{ formatEmpId(this.id) }}</p>
                 <p>員工姓名:{{ this.name }}</p>
-                <p>{{ this.seat?'已有座位' : '無座位' }}</p>
+                <p>{{ this.seat ? '已有座位' : '無座位' }}</p>
             </div>
             <p>請選擇樓層:</p>
             <select name="" id="" v-model="this.floor" @change="this.findSeat(null, this.floor, null, true)">
                 <option :value=item v-for="(item, index) in this.allfloor">{{ item }}</option>
             </select>
-            <button class="confirm" @click="this.verify">{{this.seat?'確認更換座位' : '確認選擇座位'}}</button>
+            <button class="confirm" @click="this.verify">{{ this.seat ? '確認更換座位' : '確認選擇座位' }}</button>
         </div>
         <div class="seatingChart">
             <div class="seat" v-for="(item, index) in this.floorSeat" :key="index"
@@ -208,6 +216,7 @@ export default {
             background: transparent;
             border-radius: 15px;
         }
+
         .seat {
             display: flex;
             width: 250px;
@@ -237,11 +246,13 @@ export default {
         font-weight: 600;
         font-size: 20px;
     }
-    span{
+
+    span {
         font-size: 18px;
         font-weight: 600;
         margin: 0 5px;
     }
+
     .white {
         background-color: gainsboro;
         cursor: pointer;

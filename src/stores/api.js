@@ -12,6 +12,7 @@ export default defineStore("api", {
 
     },
     actions: {
+        //新增/修改員工
         createEmployee(id, name, mail, seat, floor, judge = false) {
             let obj = {
                 "emp_id": id,
@@ -54,6 +55,7 @@ export default defineStore("api", {
                     } else {
                         this.findSeat(null, floor, null, true)
                         this.searchEmployee(null, null, true)
+                        this.searchEmployee(null, null, false)
                     }
 
 
@@ -61,6 +63,7 @@ export default defineStore("api", {
 
 
         },
+        //搜尋員工
         searchEmployee(id, name, judge = false) {
             let obj = {
                 "emp_id": id,
@@ -87,6 +90,7 @@ export default defineStore("api", {
 
                 })
         },
+        //搜尋座位
         findSeat(id, floor, seat, judge) {
             let obj = {
                 "floor_seat_seq": id,
